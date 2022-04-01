@@ -1,0 +1,31 @@
+﻿@code {
+    [Parameter]
+    public String Message { get; set; }
+
+    [Parameter]
+    public String OkButtonText { get; set; }
+
+    [Parameter]
+    public String CancelButtonText { get; set; }
+
+    [Parameter]
+    public String YesText { get; set; }
+
+    [Parameter]
+    public String NoText { get; set; }
+
+    [CascadingParameter]
+    BlazoredModalInstance ModalInstance { get; set; }
+
+    // 
+    protected async Task ConfirmClicked()
+    {
+        await ModalInstance.CloseAsync(ModalResult.Ok<String>(""));
+    }
+
+    // No, Cancel gibi buttonlara basınca modal'ı kapatmak için bu metodu kullanıcaz.
+    protected async Task CancelClicked()
+    {
+        await ModalInstance.CloseAsync(ModalResult.Cancel());
+    }
+}

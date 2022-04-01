@@ -1,0 +1,25 @@
+﻿@inherits BaseModalComponent
+
+<div class="card-body">
+    <p>@Message</p>
+</div>
+
+<div class="row justify-content-center">
+    <div class="d-flex">
+        <div class="ml-auto p-2">
+            <button class="btn btn-success" @onclick="@ConfirmClicked">@OkButtonText</button>
+            <button class="btn btn-danger" @onclick="@ConfirmClicked">@CancelButtonText</button>
+        </div>
+    </div>
+</div>
+
+
+@code { 
+    public async override Task SetParametersAsync(ParameterView parameters)
+    {
+        Message = parameters.GetValueOrDefault<String>("Message") ?? "İşlemi onaylıyor musunuz?";
+        OkButtonText = parameters.GetValueOrDefault<String>("OkButtonText") ?? "Onaylıyorum";
+        CancelButtonText = parameters.GetValueOrDefault<String>("CancelButtonText") ?? "İptal";
+        await base.SetParametersAsync(parameters);
+    }
+}

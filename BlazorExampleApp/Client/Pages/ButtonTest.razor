@@ -1,0 +1,56 @@
+﻿@page "/buttontest"
+@page "/buttons"
+
+<div class="form-group">
+
+    <div class="container">
+        <h3>@title</h3>
+        <div class="btn-toolbar">
+
+            <CustomEditButtonComponent Caption="ShowMessage"
+                                       OnClick="changeTitle" />
+
+
+            <CustomEditButtonComponent Caption="Delete"
+                                       OnClick="showConfirmation"
+                                       Color="danger"
+                                       Icon="pencil"
+                                       IsSmall="false" />
+
+
+            <AddNewButtonComponent/>
+
+
+
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [CascadingParameter]
+    IModalService Modal { get; set; }
+
+    [Inject]
+    ModalManager ModalManager { get; set; }
+
+    private String title = "";
+
+    private async Task changeTitle()
+    {
+        await ModalManager.ShowMessageAsync("Show Message Title", "Record deleted.",3000);
+
+
+        //ModalParameters mParams = new ModalParameters();
+        //mParams.Add("Message", "Test popup denemesidir.");
+
+        //Modal.Show<ShowMessagePopupComponent>("Popup Page Header", mParams);
+    }
+
+    async Task showConfirmation()
+    {
+        var res = await ModalManager.ConfirmationAsync("Confirmations", "Are you sure that it will be deleted?");
+
+        if (res) title = "Yes, just clicked."; else title = "No, just clicked.";
+    }
+}
